@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   philosopher.h                                      :+:    :+:            */
+/*   fork.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/01/15 13:15:56 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/19 15:26:07 by kschelvi      ########   odam.nl         */
+/*   Created: 2024/01/19 15:17:36 by kschelvi      #+#    #+#                 */
+/*   Updated: 2024/01/19 15:21:40 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-# include <pthread.h>
-# include "config.h"
+#include "fork.h"
 
-typedef struct s_fork	t_fork;
-
-typedef struct s_philo
+t_error	init_fork(t_fork *fork, int id)
 {
-	int			id;
-	pthread_t	thread;
-	t_config	*config;
-	t_fork		*forks;
-}	t_philo;
-
-void	init_philo(t_philo *philo, int id, t_config *config, t_fork *forks);
-
-#endif
+	fork->id = id;
+	fork->locked = false;
+	if (pthread_mutex_init(&fork->mutex, NULL) != 0)
+		return (ERR_MUTEX);
+	return (ERR_OK);
+}
