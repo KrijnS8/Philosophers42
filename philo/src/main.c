@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/15 13:16:12 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 16:42:41 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/01/17 20:43:48 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,9 @@ int	main(int argc, char *argv[])
 	error = init_simulation(&simulation, config);
 	if (error)
 		return (print_error(error), destroy_simulation(&simulation), 1);
+	error = start_simulation(&simulation);
+	if (error)
+		return (print_error(error), destroy_simulation(&simulation), 1);
+	print_error(error);
 	return (destroy_simulation(&simulation), 0);
 }

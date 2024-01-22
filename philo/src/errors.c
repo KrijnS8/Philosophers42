@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 14:45:55 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 16:34:15 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/01/17 20:32:06 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ const char	*error_to_str(t_error error)
 		[ERR_MISSING_ARGS] = "Please enter 4 or 5 arguments",
 		[ERR_INVALID_ARGS] = "One or more arguments are invalid",
 		[ERR_MALLOC] = "Malloc failure",
-		[ERR_MUTEX] = "Can't setup mutex"
+		[ERR_MUTEX] = "Can't setup mutex",
+		[ERR_THREAD] = "Can't setup thread"
 	}[error]);
 }
 
