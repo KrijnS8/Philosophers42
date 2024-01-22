@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:08:10 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 20:36:35 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/22 15:20:29 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 # include <pthread.h>
 # include "config.h"
 # include "philosopher.h"
+# include "fork.h"
 # include "errors.h"
 
 typedef struct s_simulation
 {
 	t_config		config;
 	t_philo 		*philosophers;
-	pthread_mutex_t	*forks;
-
+	t_fork			*forks;
 }	t_simulation;
 
 void	destroy_simulation(t_simulation *sim);

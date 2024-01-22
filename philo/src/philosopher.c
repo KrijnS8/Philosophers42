@@ -6,17 +6,18 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 20:53:11 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/22 15:21:30 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 #include <stdio.h>
 
-void	init_philo(t_philo *philo, int id, t_config *config)
+void	init_philo(t_philo *philo, int id, t_config *config, t_fork *forks)
 {
 	philo->id = id;
 	philo->config = config;
+	philo->forks = forks;
 }
 
 static void	*loop(void *arg)
