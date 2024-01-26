@@ -6,28 +6,36 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/22 16:27:23 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/26 13:28:59 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+#include "simulation.h"
 #include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
 
-void	init_philo(t_philo *philo, int id, t_config *config, t_fork *forks)
+void	init_philo(t_philo *philo, t_simulation *sim, int id)
 {
 	philo->id = id;
-	philo->config = config;
-	philo->forks = forks;
+	philo->config = &sim->config;
+	philo->fork_left = &sim->forks[(id - 1) % sim->config.nbr_of_philos];
+	philo->fork_right = &sim->forks[id % sim->config.nbr_of_philos];
+	philo->start_time = &sim->start_time;
 }
 
 static void	*loop(void *arg)
 {
-	long i = 0;
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (i < 100)
-		printf("%d: %ld\n", philo->id, i++);
+	while (true)
+	{
+		philo_think(philo);
+		philo_eat(philo);
+		philo_sleep(philo);
+	}
 	return (philo);
 }
 

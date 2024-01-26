@@ -6,12 +6,13 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/26 13:28:16 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/26 13:29:23 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 #include <stdlib.h>
+#include <sys/time.h>
 
 void	destroy_simulation(t_simulation *sim)
 {
@@ -26,6 +27,7 @@ t_error	start_simulation(t_simulation *sim)
 	int		i;
 	t_error	error;
 
+	gettimeofday(&sim->start_time, NULL);
 	i = 0;
 	while (i < sim->config.nbr_of_philos)
 	{
@@ -59,7 +61,7 @@ t_error	init_simulation(t_simulation *sim, t_config config)
 	{
 		if (init_fork(&sim->forks[i], i))
 			return (ERR_MUTEX);
-		init_philo(&sim->philosophers[i], i, &sim->config, &sim->forks[i]);
+		init_philo(&sim->philosophers[i], sim, i + 1);
 		i++;
 	}
 	return (ERR_OK);
