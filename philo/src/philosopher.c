@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/22 15:21:30 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/22 16:27:23 by krijn         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_error	init_thread(t_philo *philo)
 {
 	if (pthread_create(&philo->thread, NULL, loop, philo) != 0)
 		return (ERR_THREAD);
-	printf("HALAHDKA\n");
 	return (ERR_OK);
 }
 
