@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/26 13:28:59 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/30 12:29:41 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-void	init_philo(t_philo *philo, t_simulation *sim, int id)
+t_error	init_philo(t_philo *philo, t_simulation *sim, int id)
 {
 	philo->id = id;
 	philo->config = &sim->config;
 	philo->fork_left = &sim->forks[(id - 1) % sim->config.nbr_of_philos];
 	philo->fork_right = &sim->forks[id % sim->config.nbr_of_philos];
 	philo->start_time = &sim->start_time;
+	philo->last_eaten = *philo->start_time;
+	if (pthread_mutex_init(&philo->last_eaten_mutex, NULL) != 0)
+		return (ERR_MUTEX);
+	return (ERR_OK);
 }
 
 static void	*loop(void *arg)

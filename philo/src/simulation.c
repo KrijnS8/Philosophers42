@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/26 13:29:23 by krijn         ########   odam.nl         */
+/*   Updated: 2024/01/30 12:30:11 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ void	destroy_simulation(t_simulation *sim)
 		free(sim->philosophers);
 	if (sim->forks)
 		free(sim->forks);
+}
+
+void	monitor_simulation(t_simulation *sim)
+{
+	int	i;
+
+	while (!sim->finished)
+	{
+		i = 0;
+		while (i < sim->config.nbr_of_philos)
+		{
+			if (philo_check_death(&sim->philosophers[i]))
+			{
+				sim->finished = true;
+				break ;
+			}
+		}
+	}
 }
 
 t_error	start_simulation(t_simulation *sim)
@@ -39,11 +57,10 @@ t_error	start_simulation(t_simulation *sim)
 	i = 0;
 	while (i < sim->config.nbr_of_philos)
 	{
-		error = join_thread(&sim->philosophers[i]);
-		if (error)
-			return (error);
+		pthread_detach(sim->philosophers[i].thread);
 		i++;
 	}
+	monitor_simulation(sim);
 	return (error);
 }
 
@@ -61,7 +78,8 @@ t_error	init_simulation(t_simulation *sim, t_config config)
 	{
 		if (init_fork(&sim->forks[i], i))
 			return (ERR_MUTEX);
-		init_philo(&sim->philosophers[i], sim, i + 1);
+		if (init_philo(&sim->philosophers[i], sim, i + 1))
+			return (ERR_MUTEX);
 		i++;
 	}
 	return (ERR_OK);

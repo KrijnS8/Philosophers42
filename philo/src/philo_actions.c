@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/25 12:31:30 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/25 15:39:44 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/01/30 12:34:01 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
-
-static long	get_time_stamp(t_philo *philo)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (((tv.tv_sec - philo->start_time->tv_sec) * 1000) +
-			((tv.tv_usec - philo->start_time->tv_usec) / 1000));
-}
+#include <stdbool.h>
 
 static long get_elapsed_time(struct timeval *start)
 {
@@ -33,29 +25,41 @@ static long get_elapsed_time(struct timeval *start)
 			((current.tv_usec - start->tv_usec) / 1000));
 }
 
+bool	philo_check_death(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->last_eaten_mutex);
+	if (get_elapsed_time(&philo->last_eaten) >= philo->config->time_to_die)
+	{
+		printf("%ld %d died\n", get_elapsed_time(philo->start_time), philo->id);
+		pthread_mutex_unlock(&philo->last_eaten_mutex);
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->last_eaten_mutex);
+	return (false);
+}
+
 void	philo_think(t_philo *philo)
 {
-	printf("%ld %d is thinking\n", get_time_stamp(philo), philo->id);
-	while (philo->fork_left->locked || philo->fork_right->locked)
-		continue ;
-	pthread_mutex_lock(&philo->fork_left->mutex);
-	philo->fork_left->locked = true;
-	pthread_mutex_lock(&philo->fork_right->mutex);
-	philo->fork_right->locked = true;
+	printf("%ld %d is thinking\n", get_elapsed_time(philo->start_time), philo->id);
 }
 
 void	philo_eat(t_philo *philo)
 {
 	struct timeval	start;
 
-	gettimeofday(&start, NULL);
+	pthread_mutex_lock(&philo->fork_left->mutex);
+	printf("%ld %d has taken a fork\n", get_elapsed_time(philo->start_time), philo->id);
+	pthread_mutex_lock(&philo->fork_right->mutex);
+	printf("%ld %d has taken a fork\n", get_elapsed_time(philo->start_time), philo->id);
 	printf("%ld %d is eating\n", get_elapsed_time(philo->start_time), philo->id);
+	gettimeofday(&start, NULL);
 	while (get_elapsed_time(&start) < philo->config->time_to_eat)
 		continue;
+	pthread_mutex_lock(&philo->last_eaten_mutex);
+	gettimeofday(&philo->last_eaten, NULL);
+	pthread_mutex_unlock(&philo->last_eaten_mutex);
 	pthread_mutex_unlock(&philo->fork_left->mutex);
-	philo->fork_left->locked = false;
 	pthread_mutex_unlock(&philo->fork_right->mutex);
-	philo->fork_right->locked = false;
 }
 
 void	philo_sleep(t_philo *philo)
