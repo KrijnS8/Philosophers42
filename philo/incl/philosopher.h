@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/15 13:15:56 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/30 12:29:49 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/01 14:08:20 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	struct timeval	*start_time;
 	struct timeval	last_eaten;
 	pthread_mutex_t	last_eaten_mutex;
+	int				times_eaten;
 }	t_philo;
 
 t_error	init_philo(t_philo *philo, t_simulation *sim, int id);

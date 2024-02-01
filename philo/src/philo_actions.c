@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/25 12:31:30 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/30 12:34:01 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/01 14:07:55 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,18 @@ void	philo_think(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	struct timeval	start;
-
 	pthread_mutex_lock(&philo->fork_left->mutex);
 	printf("%ld %d has taken a fork\n", get_elapsed_time(philo->start_time), philo->id);
 	pthread_mutex_lock(&philo->fork_right->mutex);
 	printf("%ld %d has taken a fork\n", get_elapsed_time(philo->start_time), philo->id);
 	printf("%ld %d is eating\n", get_elapsed_time(philo->start_time), philo->id);
-	gettimeofday(&start, NULL);
-	while (get_elapsed_time(&start) < philo->config->time_to_eat)
-		continue;
+	usleep(philo->config->time_to_eat * 1000);
 	pthread_mutex_lock(&philo->last_eaten_mutex);
 	gettimeofday(&philo->last_eaten, NULL);
 	pthread_mutex_unlock(&philo->last_eaten_mutex);
 	pthread_mutex_unlock(&philo->fork_left->mutex);
 	pthread_mutex_unlock(&philo->fork_right->mutex);
+	philo->times_eaten++;
 }
 
 void	philo_sleep(t_philo *philo)

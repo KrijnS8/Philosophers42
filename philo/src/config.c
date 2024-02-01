@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:00:28 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 16:04:31 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/01 14:04:45 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ t_error	init_config(t_config *conf, int argc, char *argv[])
 		conf->times_to_eat = ft_atoi(argv[5]);
 	else
 		conf->times_to_eat = -1;
+	conf->finished = false;
 	return (ERR_OK);
 }

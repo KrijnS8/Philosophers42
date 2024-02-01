@@ -6,13 +6,14 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/30 12:30:11 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/01 14:08:36 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 #include <stdlib.h>
 #include <sys/time.h>
+#include <stdio.h>
 
 void	destroy_simulation(t_simulation *sim)
 {
@@ -25,18 +26,24 @@ void	destroy_simulation(t_simulation *sim)
 void	monitor_simulation(t_simulation *sim)
 {
 	int	i;
+	int	times_eaten;
 
 	while (!sim->finished)
 	{
 		i = 0;
+		times_eaten = 0;
 		while (i < sim->config.nbr_of_philos)
 		{
+			times_eaten += sim->philosophers[i].times_eaten;
 			if (philo_check_death(&sim->philosophers[i]))
 			{
 				sim->finished = true;
 				break ;
 			}
+			i++;
 		}
+		if (sim->config.times_to_eat > 0 && times_eaten >= (sim->config.times_to_eat * sim->config.nbr_of_philos))
+			sim->finished = true;
 	}
 }
 
@@ -69,6 +76,7 @@ t_error	init_simulation(t_simulation *sim, t_config config)
 	int	i;
 
 	sim->config = config;
+	sim->finished = false;
 	sim->philosophers = (t_philo *)malloc(config.nbr_of_philos * sizeof(t_philo));
 	sim->forks = (t_fork *)malloc(config.nbr_of_philos * sizeof(t_fork));
 	if (!sim->philosophers || !sim->forks)
