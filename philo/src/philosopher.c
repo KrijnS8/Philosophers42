@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 14:59:19 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 15:10:26 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_action(t_philo *philo, const char *msg)
 	if (!check_finished(philo->config))
 	{
 		printf("%ld %d %s\n", \
-				get_elapsed_time(philo->start_time), philo->id, msg);		
+				get_elapsed_time(philo->start_time), philo->id, msg);
 	}
 	pthread_mutex_unlock(&philo->config->print_mutex);
 }
