@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:25:37 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:35:59 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	monitor_simulation(t_simulation *sim)
 		times_eaten = 0;
 		while (i < sim->config.nbr_of_philos)
 		{
+			pthread_mutex_lock(&sim->philosophers[i].times_eaten_mutex);
 			times_eaten += sim->philosophers[i].times_eaten;
+			pthread_mutex_unlock(&sim->philosophers[i].times_eaten_mutex);
 			if (philo_check_death(&sim->philosophers[i]))
 			{
 				sim->config.finished = true;

@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:23:09 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:36:25 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_error	init_philo(t_philo *philo, t_simulation *sim, int id)
 	philo->start_time = &sim->start_time;
 	philo->times_eaten = 0;
 	if (pthread_mutex_init(&philo->last_eaten_mutex, NULL) != 0)
+		return (ERR_MUTEX);
+	if (pthread_mutex_init(&philo->times_eaten_mutex, NULL) != 0)
 		return (ERR_MUTEX);
 	return (ERR_OK);
 }

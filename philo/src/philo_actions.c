@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/25 12:31:30 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:22:27 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:34:58 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	philo_eat(t_philo *philo)
 	usleep(philo->config->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->fork_left->mutex);
 	pthread_mutex_unlock(&philo->fork_right->mutex);
+	pthread_mutex_lock(&philo->times_eaten_mutex);
 	philo->times_eaten++;
+	pthread_mutex_unlock(&philo->times_eaten_mutex);
 }
 
 void	philo_sleep(t_philo *philo)
