@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/19 15:14:32 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/19 15:22:17 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:25:15 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_simulation	t_simulation;
 typedef struct s_fork
 {
 	int				id;
-	bool			locked;
 	pthread_mutex_t	mutex;
 }	t_fork;
 

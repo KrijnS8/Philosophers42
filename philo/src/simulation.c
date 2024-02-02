@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:23:53 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:25:37 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_error	init_simulation(t_simulation *sim, t_config config)
 	int	i;
 
 	sim->config = config;
-	sim->finished = false;
 	sim->philosophers = (t_philo *)malloc(config.nbr_of_philos * \
 											sizeof(t_philo));
 	sim->forks = (t_fork *)malloc(config.nbr_of_philos * sizeof(t_fork));
