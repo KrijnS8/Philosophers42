@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:36:25 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 14:59:19 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void	*loop(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep((philo->config->time_to_die / 5) * 1000);
-	while (!philo->config->finished)
+	while (!check_finished(philo->config))
 	{
 		philo_think(philo);
-		if (philo->config->finished)
+		if (check_finished(philo->config))
 			break ;
 		philo_eat(philo);
-		if (philo->config->finished)
+		if (check_finished(philo->config))
 			break ;
 		philo_sleep(philo);
 	}
@@ -56,9 +56,13 @@ static void	*loop(void *arg)
 
 void	print_action(t_philo *philo, const char *msg)
 {
-	if (!philo->config->finished)
+	pthread_mutex_lock(&philo->config->print_mutex);
+	if (!check_finished(philo->config))
+	{
 		printf("%ld %d %s\n", \
-				get_elapsed_time(philo->start_time), philo->id, msg);
+				get_elapsed_time(philo->start_time), philo->id, msg);		
+	}
+	pthread_mutex_unlock(&philo->config->print_mutex);
 }
 
 t_error	init_thread(t_philo *philo)

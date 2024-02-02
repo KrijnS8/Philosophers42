@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:00:28 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/01 14:04:45 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 14:28:50 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ t_error	init_config(t_config *conf, int argc, char *argv[])
 		conf->times_to_eat = ft_atoi(argv[5]);
 	else
 		conf->times_to_eat = -1;
+	if (pthread_mutex_init(&conf->finished_mutex, NULL) != 0)
+		return (ERR_MUTEX);
+	if (pthread_mutex_init(&conf->print_mutex, NULL) != 0)
+		return (ERR_MUTEX);
 	conf->finished = false;
 	return (ERR_OK);
+}
+
+bool	check_finished(t_config *conf)
+{
+	bool	result;
+
+	pthread_mutex_lock(&conf->finished_mutex);
+	result = conf->finished;
+	pthread_mutex_unlock(&conf->finished_mutex);
+	return (result);
+}
+
+void	set_finished(t_config *conf, bool status)
+{
+	pthread_mutex_lock(&conf->finished_mutex);
+	conf->finished = status;
+	pthread_mutex_unlock(&conf->finished_mutex);
 }

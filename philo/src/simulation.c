@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 12:35:59 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 14:18:03 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	monitor_simulation(t_simulation *sim)
 	int	i;
 	int	times_eaten;
 
-	while (!sim->config.finished)
+	while (!check_finished(&sim->config))
 	{
 		i = 0;
 		times_eaten = 0;
@@ -39,14 +39,14 @@ void	monitor_simulation(t_simulation *sim)
 			pthread_mutex_unlock(&sim->philosophers[i].times_eaten_mutex);
 			if (philo_check_death(&sim->philosophers[i]))
 			{
-				sim->config.finished = true;
+				set_finished(&sim->config, true);
 				break ;
 			}
 			i++;
 		}
 		if (sim->config.times_to_eat > 0 && times_eaten >= \
 				(sim->config.times_to_eat * sim->config.nbr_of_philos))
-			sim->config.finished = true;
+			set_finished(&sim->config, true);
 	}
 }
 
@@ -74,18 +74,18 @@ t_error	start_simulation(t_simulation *sim)
 	return (error);
 }
 
-t_error	init_simulation(t_simulation *sim, t_config config)
+t_error	init_simulation(t_simulation *sim, t_config *config)
 {
 	int	i;
 
-	sim->config = config;
-	sim->philosophers = (t_philo *)malloc(config.nbr_of_philos * \
+	sim->config = *config;
+	sim->philosophers = (t_philo *)malloc(config->nbr_of_philos * \
 											sizeof(t_philo));
-	sim->forks = (t_fork *)malloc(config.nbr_of_philos * sizeof(t_fork));
+	sim->forks = (t_fork *)malloc(config->nbr_of_philos * sizeof(t_fork));
 	if (!sim->philosophers || !sim->forks)
 		return (ERR_MALLOC);
 	i = 0;
-	while (i < config.nbr_of_philos)
+	while (i < config->nbr_of_philos)
 	{
 		if (init_fork(&sim->forks[i], i))
 			return (ERR_MUTEX);
