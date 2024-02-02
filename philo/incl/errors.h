@@ -6,14 +6,14 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 14:44:35 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/17 20:31:52 by krijn         ########   odam.nl         */
+/*   Updated: 2024/02/02 12:21:10 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-typedef enum	s_error
+typedef enum s_error
 {
 	ERR_OK = 0,
 	ERR_MISSING_ARGS,

@@ -6,12 +6,12 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/15 13:15:56 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/01 14:08:20 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:21:37 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILOSOPHER_H
+# define PHILOSOPHER_H
 # include <pthread.h>
 # include <sys/time.h>
 # include "config.h"
@@ -34,9 +34,11 @@ typedef struct s_philo
 
 t_error	init_philo(t_philo *philo, t_simulation *sim, int id);
 t_error	init_thread(t_philo *philo);
-t_error join_thread(t_philo *philo);
+t_error	join_thread(t_philo *philo);
 
+long	get_elapsed_time(struct timeval *start);
 bool	philo_check_death(t_philo *philo);
+void	print_action(t_philo *philo, const char *msg);
 
 void	philo_think(t_philo *philo);
 void	philo_eat(t_philo *philo);

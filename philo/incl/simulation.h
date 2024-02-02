@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:08:10 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/30 11:38:31 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/02 12:21:50 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_simulation
 {
 	t_config		config;
-	t_philo 		*philosophers;
+	t_philo			*philosophers;
 	t_fork			*forks;
 	struct timeval	start_time;
 	bool			finished;

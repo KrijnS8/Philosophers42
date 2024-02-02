@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/15 13:16:12 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/01/22 15:20:21 by krijn         ########   odam.nl         */
+/*   Updated: 2024/02/02 12:22:00 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <pthread.h>
 #include <stdio.h>
 
-// Usage: ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
 int	main(int argc, char *argv[])
 {
 	t_simulation	simulation;
