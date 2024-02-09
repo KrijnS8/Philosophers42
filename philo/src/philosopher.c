@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:18:09 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 15:10:26 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/09 12:44:23 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	*loop(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep((philo->config->time_to_die / 5) * 1000);
+		usleep(15000);
 	while (!check_finished(philo->config))
 	{
 		philo_think(philo);

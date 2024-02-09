@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:08:10 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 14:17:33 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/09 12:38:29 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ typedef struct s_simulation
 void	destroy_simulation(t_simulation *sim);
 t_error	init_simulation(t_simulation *sim, t_config *config);
 t_error	start_simulation(t_simulation *sim);
+
+void	smart_sleep(int time_to_sleep_ms, t_config *conf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kschelvi <kschelvi@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/17 16:19:01 by kschelvi      #+#    #+#                 */
-/*   Updated: 2024/02/02 14:18:03 by kschelvi      ########   odam.nl         */
+/*   Updated: 2024/02/09 12:56:14 by kschelvi      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void	destroy_simulation(t_simulation *sim)
 {
@@ -94,4 +95,14 @@ t_error	init_simulation(t_simulation *sim, t_config *config)
 		i++;
 	}
 	return (ERR_OK);
+}
+
+void	smart_sleep(int time_to_sleep_ms, t_config *conf)
+{
+	struct timeval	start_time;
+
+	gettimeofday(&start_time, NULL);
+	while (!check_finished(conf) && \
+			get_elapsed_time(&start_time) < time_to_sleep_ms)
+		usleep(200);
 }
